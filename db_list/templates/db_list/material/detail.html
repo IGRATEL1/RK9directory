@@ -1,0 +1,43 @@
+{% extends "db_list/base.html" %}
+<!DOCTYPE html>
+{% load static %}
+{% block title %}{{ material.title }}{% endblock %}
+
+<html>
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/detail.css' %}">
+
+<h1><a href="/db_list">Материалы</a><a>>></a><a href="">{{material.title}}</a></h1>
+
+    <table class="table1">
+        <caption>Механические характеристики</caption>
+                <thead>
+            <tr class="upertable">
+                <th>Предел прочности, МПа </th>
+                <th>Модуль упругости, ГПа</th>
+                <th>Предел текучести, МПа</th>
+                <th>Относительное удлинение, %</th>
+                <th>Коэффициент пуассона  </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="undertable">
+                <td>{{material.strength_limit}}</td>
+                <td>{{material.modulus_of_elasticity}}</td>
+                <td>{{material.yield_strength}}</td>
+                <td>{{material.elongation}}</td>
+                <td>{{material.poisson_ratio}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <block class="graph">
+        {% autoescape off %}
+        {% for plot in plots %}
+         <u1>{{plot}}</u1>
+        {% endfor %}
+        {% endautoescape %} 
+    </block>  
+    <a href="" download> Скачать модель</a>     
+{% endblock %}
+</html>

@@ -1,0 +1,12 @@
+{% extends "db_list/base.html" %}
+{% block title %}Материалы{% endblock %}
+{% block content %}
+<h1>Материалы</h1>
+{% for material in materials %}
+<h2>
+<a href="{{material.get_absolute_url}}"">
+{{ material.title }}
+</a>
+</h2>
+{% endfor %}
+{% endblock %}

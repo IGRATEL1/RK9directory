@@ -1,0 +1,10 @@
+{% extends "db_list/base.html" %}
+<!DOCTYPE html>
+{% load static %}
+
+{% block content %}
+<form method="post" class="post-form">{% csrf_token %}
+    {{form.as_p}}
+    <button type="submit" class="save btn btn-default">Сохранить</button>
+</form>
+{% endblock %}

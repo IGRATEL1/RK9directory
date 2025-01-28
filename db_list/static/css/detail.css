@@ -1,0 +1,50 @@
+h1 a{
+    color: #f13636;
+}
+
+tr th{
+    border: 1px solid #000000;
+}
+
+tr td{
+    height: 50px;
+    width: 190px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #000000;
+}
+
+.vertical-top {
+    vertical-align: top;
+}
+
+.vertical-bottom {
+    vertical-align: bottom;
+}
+
+
+
+
+table {
+    justify-content: center;
+    width: 300px;
+    /* центрируем таблицу */
+    margin: auto;
+    /* выравнивание текста внутри ячеек */
+    text-align: center;
+    /* делаем границы красивыми */
+    border-collapse: collapse;
+}
+
+u1 {
+    justify-content: center;
+    display: flex;
+}
+
+.upertable{
+    background-color: rgb(71, 78, 205);
+    color: aliceblue;
+}
+.undertable{
+    background-color: rgb(210, 239, 246);
+}
