@@ -1,43 +1,97 @@
 {% extends "db_list/base.html" %}
-<!DOCTYPE html>
+{% block title %}{{ material.title }}{% endblock title %}
 {% load static %}
-{% block title %}{{ material.title }}{% endblock %}
+<!DOCTYPE html>
 
-<html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script src="{% static "scene/scene.js"%}"></script>
+{% endblock scripts%}
 
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/detail.css' %}">
+<body>
+    <nav>
+        <ul>
+            <li><a href="#properties">Характеристики</a></li>
+            <li><a href="#model">Математическая модель</a></li>
+            <li><a href="#applications">Применение</a></li>
+            <li><a href="#contacts">Контакты</a></li>
+        </ul>
+    </nav>
 
-<h1><a href="/db_list">Материалы</a><a>>></a><a href="">{{material.title}}</a></h1>
+    <div class="hero">
+        <a href="/db_list">Материалы</a><a>>></a><a href="">{{material.title}}</a>
+    </div>
 
-    <table class="table1">
-        <caption>Механические характеристики</caption>
-                <thead>
-            <tr class="upertable">
-                <th>Предел прочности, МПа </th>
-                <th>Модуль упругости, ГПа</th>
-                <th>Предел текучести, МПа</th>
-                <th>Относительное удлинение, %</th>
-                <th>Коэффициент пуассона  </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="undertable">
-                <td>{{material.strength_limit}}</td>
-                <td>{{material.modulus_of_elasticity}}</td>
-                <td>{{material.yield_strength}}</td>
-                <td>{{material.elongation}}</td>
-                <td>{{material.poisson_ratio}}</td>
-            </tr>
-        </tbody>
-    </table>
-    <block class="graph">
-        {% autoescape off %}
-        {% for plot in plots %}
-         <u1>{{plot}}</u1>
-        {% endfor %}
-        {% endautoescape %} 
-    </block>  
-    <a href="" download> Скачать модель</a>     
-{% endblock %}
+    <div class="container">
+        <section id="properties" class="card">
+            <h2>Механические характеристики</h2>
+            <table>
+                <tr>
+                    <th>Параметр</th>
+                    <th>Значение</th>
+                    <th>Единицы измерения</th>
+                </tr>
+                <tr>
+                    <td>Предел прочности</td>
+                    <td>{{material.strength_limit}}</td>
+                    <td>МПа</td>
+                </tr>
+                <tr>
+                    <td>Предел текучести</td>
+                    <td>{{material.yield_strength}}</td>
+                    <td>МПа</td>
+                </tr>
+                <tr>
+                    <td>Модуль упругости</td>
+                    <td>{{material.modulus_of_elasticity}}</td>
+                    <td>ГПа</td>
+                </tr>
+                <tr>
+                    <td>Относительное удлинение</td>
+                    <td>{{material.elongation}}</td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td>Коэффициент пуассона</td>
+                    <td>{{material.poisson_ratio}}</td>
+                    <td></td>
+                </tr>
+            </table>
+        </section>
+    </div>
+    <div class="container-2" id="model">
+        <div class="threed-model">
+            
+            <script>
+                window.onload = function(){
+                    initScene("{{material.threeD_model.url}}");
+                };
+            </script>
+            
+        </div>
+        <div class="model-download">
+            <h3>Скачать математическую модель материала</h3>
+            <p>Модель содержит сцену индентирования в программном комплексе Ansys</p>
+            <div class="download-button">
+                <a href="{% url 'db_list:download_file' material.id %}" download class="btn"> Скачать модель</a>
+            </div>
+        </div>
+        
+    </div>
+
+    <footer id="contacts">
+        <p>© 2025 ЦАГИ. Контакты: test@mail.bmstu.ru</p>
+    </footer>
+</body>
 </html>
+{% endblock content %}

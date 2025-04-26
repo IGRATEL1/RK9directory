@@ -1,0 +1,5 @@
+ /media/
+ /djangoenv/
+/__pycache__/
+ migrations/
+ .vscode/

@@ -9,15 +9,6 @@ class PublishedManager(models.Manager):
         return super().get_queryset()\
         .filter(status=Materials_stats.Status.PUBLISHED)
 
-class Author(models.Model):
-    first_name = models.CharField(max_length=50)
-    second_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    email = models.EmailField(max_length=254)
-    phone_number = models.CharField(max_length=17)
-    confirmed_status = models.BooleanField()
-    administator_status = models.BooleanField()
-
 class Materials_stats(models.Model):
     class Meta:
         ordering = ['title']#сортируем по названию по алфавиту
@@ -29,17 +20,29 @@ class Materials_stats(models.Model):
         PUBLISHED = 'PB', 'Published'#в базе данных будут хранится еще не подтвержденные материалы
 
     title=models.CharField(max_length=250)#название материала
+
     strength_limit = models.CharField(max_length=10)#предел прочности
+
     modulus_of_elasticity = models.CharField(max_length=10)#модуль упругости
+
     yield_strength = models.CharField(max_length=10)#предел текучести
+
     elongation = models.CharField(max_length=5)#относительное удлинение
+
     poisson_ratio = models.CharField(max_length=10)#коэффициент Пуассона
+
     ansys_file = models.FileField(upload_to='files')#файл ансиса
+
     ludwig_const= models.CharField(max_length=6)
+
     material_hardening_index = models.CharField(max_length=10)
+
     publish = models.DateTimeField(default=timezone.now)#время публикации
+
     created = models.DateTimeField(auto_now_add=True)#время записи
+
     updated = models.DateTimeField(auto_now=True)#время обновления
+    
     status = models.CharField(max_length=2,
                                     choices=Status.choices,
                                     default=Status.DRAFT)#статус публикации
@@ -49,6 +52,8 @@ class Materials_stats(models.Model):
     published = PublishedManager() # конкретно-прикладной менеджер
 
     graph_file = models.FileField(upload_to='graphs', default='settings.MEDIA_ROOT/files/sad_face.png')
+
+    threeD_model = models.FileField(upload_to='3Dmodel')
     def get_absolute_url(self):
         return reverse('db_list:material_detail',
             args=[self.id])
